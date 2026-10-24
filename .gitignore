@@ -2,6 +2,10 @@
 /.osp
 ###< OSPanel ###
 
+###> JetBrains ###
+/.idea
+###< JetBrains ###
+
 ###> symfony/framework-bundle ###
 /.env.*
 /.env
@@ -50,3 +54,5 @@ phpstan.neon
 /repomix-instruction.md
 /repomix-output.txt
 ###< repomix ###
+
+/u0281429_sexec.sql
