@@ -1,0 +1,18 @@
+{#
+Общая сортируемая ссылка для заголовка колонки таблицы.
+
+Обязательные переменные:
+    - label:  заголовок колонки
+    - field:  идентификатор поля сортировки (должен поддерживаться репозиторием)
+    - route:  маршрут первой страницы списка (сортировка сбрасывает на первую страницу)
+    - params: текущие query-параметры без sort/dir (фильтры)
+    - sort:   активное поле сортировки
+    - dir:    активное направление сортировки ('asc' | 'desc')
+#}
+{% set next_dir = sort == field and dir == 'asc' ? 'desc' : 'asc' %}
+{% set icon = sort == field ? (dir == 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up' %}
+
+<a class="text-decoration-none text-nowrap"
+   href="{{ path(route, params|merge({ sort: field, dir: next_dir })) }}">
+    {{ label }} <i class="bi {{ icon }}" aria-hidden="true"></i>
+</a>

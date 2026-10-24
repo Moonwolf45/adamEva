@@ -1,0 +1,71 @@
+{% block app_image_row %}
+    <div class="form-group mb-3">
+        <div class="preview_img">
+            <img id="preview_img" src="" alt="Превью">
+        </div>
+    </div>
+    <div class="mb-3">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+        {{ form_help(form) }}
+    </div>
+{% endblock %}
+
+{% block app_image_widget %}
+    <input type="file"
+        id="{{ id }}"
+        name="{{ full_name }}"
+        class="form-control {{ attr.class|default('') }} js-image-input"
+        {% if attr.accept is defined and attr.accept is not empty %}
+            accept="{{ attr.accept }}"
+        {% endif %}
+        {% if disabled %}disabled{% endif %}
+        {% if required %}required{% endif %}
+    >
+{% endblock %}
+
+{% block app_product_image_row %}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+{% endblock %}
+
+{% block app_product_image_widget %}
+    <div class="mb-3">
+        <label class="form-label">Дополнительные картинки</label>
+
+        <div class="row g-3" id="product-images-container">
+            {% for imageForm in form.images %}
+                <div class="col-auto" data-image-item>
+                    <div class="border rounded p-2 position-relative">
+                        {% if imageForm.vars.value.image %}
+                            <img src="{{ asset(imageForm.vars.value.image) }}"
+                                 alt=""
+                                 class="js-image-preview"
+                                 style="width:140px">
+                        {% else %}
+                            <div class="js-image-placeholder bg-light rounded d-flex align-items-center justify-content-center"
+                                 style="width:140px;height:100px">
+                                <i class="bi bi-image fs-1 text-secondary"></i>
+                            </div>
+                        {% endif %}
+
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-1 js-image-remove"
+                                title="Удалить">
+                            <i class="bi bi-trash" aria-hidden="true"></i>
+                        </button>
+
+                        {{ form_row(imageForm.image, {label: false}) }}
+                        {{ form_widget(imageForm.delete, {attr: {class: 'd-none'}}) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="js-add-image">
+            <i class="bi bi-plus-lg" aria-hidden="true"></i> Добавить картинку
+        </button>
+        <div class="form-text">Картинки сохраняются только после отправки формы</div>
+    </div>
+{% endblock %}

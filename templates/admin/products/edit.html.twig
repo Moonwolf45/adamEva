@@ -1,0 +1,15 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block page_name %}
+    Редактирование товара {{ product.title }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ include('admin/_parts/select2_styles.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    {{ include('admin/products/_form.html.twig') }}
+
+    <a class="btn btn-danger" href="{{ path('admin_products_index') }}">Отмена</a>
+{% endblock %}

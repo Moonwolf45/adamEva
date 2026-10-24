@@ -1,0 +1,60 @@
+{% extends 'layouts/auth.html.twig' %}
+
+{% block page_name %}
+    Авторизация
+{% endblock %}
+
+{% block body %}
+    <main class="login-box">
+        <h1 class="login-logo">
+            <img src="{{ asset('images/AdminLTEFullLogo.png') }}" alt="AdminLTE Logo" />
+        </h1>
+        <div class="card">
+            <div class="card-body login-card-body">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                <form action="{{ path('admin_login') }}" method="post">
+                    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                    <label class="visually-hidden" for="loginEmail">Логин</label>
+                    <div class="input-group mb-3">
+                        <input id="loginEmail" name="_username" type="text" class="form-control" placeholder="Логин" value="{{ last_username }}" required />
+                        <div class="input-group-text">
+                            <span class="bi bi-person-fill"></span>
+                        </div>
+                    </div>
+                    <label class="visually-hidden" for="loginPassword">Пароль</label>
+                    <div class="input-group mb-3">
+                        <input id="loginPassword" name="_password" type="password" class="form-control" placeholder="Пароль" required />
+                        <div class="input-group-text">
+                            <span class="bi bi-lock-fill"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="_remember_me" value="on" id="_remember_me" checked/>
+                                <label class="form-check-label" for="_remember_me">Запомнить</label>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Войти</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <p class="mb-1">
+                    <a href="{{ path('admin_forgot_password') }}">Забыли пароль?</a>
+                </p>
+            </div>
+        </div>
+    </main>
+{% endblock %}

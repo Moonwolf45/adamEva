@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('images/favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('images/favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('images/favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('images/favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('images/favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('images/favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x19" href="{{ asset('images/favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon/favicon-16x16.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon/favicon.ico') }}">
+    <link rel="manifest" href="{{ asset('images/favicon/manifest.json') }}">
+    <link rel="msapplication-TileColor" content="#ffffff">
+    <link rel="msapplication-TileImage" content="{{ asset('images/favicon/ms-icon-144x144.png') }}">
+    <link rel="theme-color" content="#ffffff">
+
+    <title>{% block title %}Админка Адам & Ева{% endblock %}</title>
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+
+    <meta name="supported-color-schemes" content="light dark" />
+
+    {{ importmap() }}
+
+    <link rel="preload" href="{{ asset('css/admin/adminlte.min.css') }}" as="style">
+    <link rel="stylesheet" href="{{ asset('css/admin/fonts.css') }}" media="print" onload="this.media = 'all'">
+    <link rel="stylesheet" href="{{ asset('css/admin/overlayscrollbars.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/admin/apexcharts.min.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+
+    <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}">
+
+    <script>
+        (() => {
+            'use strict';
+            const root = document.documentElement;
+
+            if (root.getAttribute('data-lte-color-mode') === 'off') {
+                return;
+            }
+
+            const STORAGE_KEY = 'lte-theme';
+            let stored = null;
+            try {
+                stored = localStorage.getItem(STORAGE_KEY);
+            } catch {
+                // localStorage may be unavailable (private mode, sandboxed iframe).
+            }
+
+            const authored = root.getAttribute('data-bs-theme');
+            let resolved = 'light';
+            if (stored === 'dark' || stored === 'light') {
+                resolved = stored;
+            } else if (authored === 'dark' || authored === 'light') {
+                resolved = authored;
+            } else if (globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
+                resolved = 'dark';
+            }
+            root.setAttribute('data-bs-theme', resolved);
+            root.style.colorScheme = resolved;
+
+            if (resolved !== authored) {
+                root.setAttribute('data-lte-theme-resolved', '');
+            }
+        })();
+    </script>
+</head>
+
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<div class="app-wrapper">
+    <nav class="app-header navbar navbar-expand bg-body">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button" aria-label="Toggle sidebar">
+                        <i class="bi bi-list"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="bd-theme" aria-label="Toggle color scheme" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-sun-fill" data-lte-theme-icon="light"></i>
+                        <i class="bi bi-moon-fill d-none" data-lte-theme-icon="dark"></i>
+                        <i class="bi bi-circle-half d-none" data-lte-theme-icon="auto"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme" style="--bs-dropdown-min-width: 8rem">
+                        <li>
+                            <button
+                                type="button"
+                                class="dropdown-item d-flex align-items-center"
+                                data-bs-theme-value="light"
+                                aria-pressed="false"
+                            >
+                                <i class="bi bi-sun-fill me-2"></i>
+                                Светлая
+                                <i class="bi bi-check-lg ms-auto d-none"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                class="dropdown-item d-flex align-items-center"
+                                data-bs-theme-value="dark"
+                                aria-pressed="false"
+                            >
+                                <i class="bi bi-moon-fill me-2"></i>
+                                Тёмная
+                                <i class="bi bi-check-lg ms-auto d-none"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                class="dropdown-item d-flex align-items-center active"
+                                data-bs-theme-value="auto"
+                                aria-pressed="true"
+                            >
+                                <i class="bi bi-circle-half me-2"></i>
+                                Авто
+                                <i class="bi bi-check-lg ms-auto d-none"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ path('app_index') }}" class="btn btn-outline-primary float-end mr-2">В магазин</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('admin_logout') }}" class="btn btn-outline-danger float-end">Выход</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <div class="sidebar-brand">
+            <a href="{{ path('admin_default_index') }}" class="brand-link">
+                <img
+                    src="{{ asset('images/AdminLTELogo.png') }}"
+                    alt="AdminLTE Logo"
+                    class="brand-image opacity-75 shadow"
+                />
+                <span class="brand-text fw-light">AdminLTE 4</span>
+            </a>
+        </div>
+
+        <div class="sidebar-search" role="search">
+            <label for="sidebar-search-input" class="visually-hidden">Фильтр меню</label>
+            <input type="search"
+                id="sidebar-search-input"
+                class="form-control form-control-sm"
+                placeholder="Введите название меню…"
+                autocomplete="off"
+                data-lte-toggle="sidebar-search"
+                data-lte-target="#navigation"
+            />
+            <p class="fs-7 text-secondary mt-2 mb-0" data-lte-search-empty role="status" hidden>
+                Совпадений нет.
+            </p>
+        </div>
+
+        <div class="sidebar-wrapper">
+            <nav class="mt-2" aria-label="Main navigation">
+                <ul
+                    class="nav sidebar-menu flex-column"
+                    data-lte-toggle="treeview"
+                    data-accordion="false"
+                    id="navigation"
+                >
+                    {% import 'admin/_parts/menu.html.twig' as menu %}
+
+                    {{ menu.menu_item('admin_default_index', 'bi bi-speedometer', 'Главная') }}
+                    {{ menu.menu_item('admin_categories_index', 'bi bi-diagram-3', 'Категории') }}
+                    {{ menu.menu_item('admin_products_index', 'bi bi-box-seam', 'Товары') }}
+                </ul>
+            </nav>
+        </div>
+    </aside>
+    <main class="app-main">
+        <div class="app-content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="mb-0 fs-3">{% block page_name %}{% endblock %}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        {{ render_breadcrumbs('admin/_parts/breadcrumbs.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-content">
+            <div class="container-fluid">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <strong>
+            Copyright &copy; 2014-2026&nbsp;
+            <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+        </strong>
+        All rights reserved.
+    </footer>
+</div>
+
+<script type="module">import 'admin';</script>
+
+{% block javascript %}{% endblock %}
+</body>
+</html>

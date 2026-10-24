@@ -1,0 +1,58 @@
+{#
+Общая постраничная навигация для списков в админке.
+
+Обязательные переменные:
+    - current_page:   текущая страница (int)
+    - max_pages:      всего страниц (int)
+    - route:          маршрут первой страницы списка (без параметра page)
+    - route_paginated: маршрут страниц > 1 (с параметром page)
+    - params:         текущие query-параметры, которые нужно сохранить
+                      (фильтры и сортировка, без page; null-значения игнорируются)
+#}
+{% if max_pages > 1 %}
+    {% set window = 2 %}
+
+    <nav aria-label="Постраничная навигация">
+        <ul class="pagination mb-0">
+            <li class="page-item{{ current_page <= 1 ? ' disabled' }}">
+                {% if current_page > 1 %}
+                    <a class="page-link"
+                       href="{{ current_page - 1 == 1 ? path(route, params) : path(route_paginated, params|merge({ page: current_page - 1 })) }}"
+                       aria-label="Предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% else %}
+                    <span class="page-link">&laquo;</span>
+                {% endif %}
+            </li>
+
+            {% for p in 1..max_pages %}
+                {% set in_window = p >= current_page - window and p <= current_page + window %}
+                {% if p == 1 or p == max_pages or in_window %}
+                    <li class="page-item{{ p == current_page ? ' active' }}">
+                        <a class="page-link"
+                           href="{{ p == 1 ? path(route, params) : path(route_paginated, params|merge({ page: p })) }}">
+                            {{ p }}
+                        </a>
+                    </li>
+                {% elseif p == current_page - window - 1 or p == current_page + window + 1 %}
+                    <li class="page-item disabled">
+                        <span class="page-link">&hellip;</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            <li class="page-item{{ current_page >= max_pages ? ' disabled' }}">
+                {% if current_page < max_pages %}
+                    <a class="page-link"
+                       href="{{ path(route_paginated, params|merge({ page: current_page + 1 })) }}"
+                       aria-label="Следующая страница">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% else %}
+                    <span class="page-link">&raquo;</span>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+{% endif %}

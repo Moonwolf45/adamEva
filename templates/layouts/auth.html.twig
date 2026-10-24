@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('images/favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('images/favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('images/favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('images/favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('images/favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('images/favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x19" href="{{ asset('images/favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon/favicon-16x16.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon/favicon.ico') }}">
+    <link rel="manifest" href="{{ asset('images/favicon/manifest.json') }}">
+    <link rel="msapplication-TileColor" content="#ffffff">
+    <link rel="msapplication-TileImage" content="{{ asset('images/favicon/ms-icon-144x144.png') }}">
+    <link rel="theme-color" content="#ffffff">
+
+    <title>{% block title %}Админка Адам & Ева{% endblock %}</title>
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+
+    <meta name="supported-color-schemes" content="light dark" />
+
+    {{ importmap() }}
+
+    <link rel="preload" href="{{ asset('css/admin/adminlte.min.css') }}" as="style">
+    <link rel="stylesheet" href="{{ asset('css/admin/fonts.css') }}" media="print" onload="this.media = 'all'">
+    <link rel="stylesheet" href="{{ asset('css/admin/overlayscrollbars.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/admin/apexcharts.min.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+
+    <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}">
+
+    <script>
+        (() => {
+            'use strict';
+            const root = document.documentElement;
+
+            if (root.getAttribute('data-lte-color-mode') === 'off') {
+                return;
+            }
+
+            const STORAGE_KEY = 'lte-theme';
+            let stored = null;
+            try {
+                stored = localStorage.getItem(STORAGE_KEY);
+            } catch {
+                // localStorage may be unavailable (private mode, sandboxed iframe).
+            }
+
+            const authored = root.getAttribute('data-bs-theme');
+            let resolved = 'light';
+            if (stored === 'dark' || stored === 'light') {
+                resolved = stored;
+            } else if (authored === 'dark' || authored === 'light') {
+                resolved = authored;
+            } else if (globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
+                resolved = 'dark';
+            }
+            root.setAttribute('data-bs-theme', resolved);
+            root.style.colorScheme = resolved;
+
+            if (resolved !== authored) {
+                root.setAttribute('data-lte-theme-resolved', '');
+            }
+        })();
+    </script>
+</head>
+
+<body class="login-page bg-body-secondary">
+    {% block body %}{% endblock %}
+
+    <script type="module">import 'admin';</script>
+
+    {% block javascript %}{% endblock %}
+</body>
+</html>

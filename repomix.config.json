@@ -1,0 +1,37 @@
+{
+    "output": {
+        "compress": true,
+        "filePath": "repomix-output.txt",
+        "style": "xml",
+        "parsable": true,
+        "headerText": "Это контекст моего проекта для анализа.",
+        "instructionFilePath": "repomix-instruction.md",
+        "showLineNumbers": true,
+        "copyToClipboard": false
+    },
+    "include": [
+        "src/",
+        "templates/",
+        "README.md"
+    ],
+    "ignore": {
+        "customPatterns": [
+            "vendor/**",
+            "node_modules/**",
+            "var/**",
+            ".idea/**",
+            "storage/**",
+            "bootstrap/cache/**",
+            "*.log",
+            ".env*",
+            "u0281429_sexec.sql"
+        ]
+    },
+    "security": {
+        "enableSecretLint": true
+    },
+    "codeTransform": {
+        "removeComments": true,
+        "removeEmptyLines": true
+    }
+}

@@ -1,0 +1,38 @@
+{% if breadcrumbs|length > 0 %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb float-sm-end">
+            {% for item in breadcrumbs %}
+                <li class="breadcrumb-item {% if loop.last %}active{% endif %}">
+                    {% if item.url and not loop.last %}
+                        <a href="{{ item.url }}">
+                            <span>{{ item.label }}</span>
+                        </a>
+                    {% else %}
+                        <span>{{ item.label }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
+{% endif %}
+
+{% block javascripts %}
+    {% if breadcrumbs|length > 0 %}
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {% for item in breadcrumbs %}
+                {
+                  "@type": "ListItem",
+                  "position": {{ loop.index }},
+                  "name": {{ item.label|json_encode|raw }}{% if item.absoluteUrl %},
+                  "item": {{ item.absoluteUrl|json_encode|raw }}{% endif %}
+                }{% if not loop.last %},{% endif %}
+                {% endfor %}
+              ]
+            }
+        </script>
+    {% endif %}
+{% endblock %}

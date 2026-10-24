@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success mb-2">{{ button_label|default('Сохранить') }}</button>
+{{ form_end(form) }}
+
+{% block javascript %}
+<script type="module">
+    import 'form-category-select2';
+</script>
+{% endblock %}

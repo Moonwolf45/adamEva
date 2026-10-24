@@ -1,0 +1,55 @@
+{{ form_start(form, {method: 'POST', attr: {enctype: 'multipart/form-data'}}) }}
+    {{ form_widget(form, {exclude: ['images']}) }}
+
+    <div class="mb-3">
+        <label class="form-label">Дополнительные картинки</label>
+
+        <div class="row g-3" id="product-images-container">
+            {% for imageForm in form.images %}
+                <div class="col-auto" data-image-item>
+                    <div class="border rounded p-2 position-relative">
+                        {% if imageForm.vars.value.image %}
+                            <img src="{{ asset(imageForm.vars.value.image) }}"
+                                 alt=""
+                                 class="js-image-preview"
+                                 style="width:140px">
+                        {% else %}
+                            <div class="js-image-placeholder bg-light rounded d-flex align-items-center justify-content-center"
+                                 style="width:140px;height:100px">
+                                <i class="bi bi-image fs-1 text-secondary"></i>
+                            </div>
+                        {% endif %}
+
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-1 js-image-remove"
+                                title="Удалить">
+                            <i class="bi bi-trash" aria-hidden="true"></i>
+                        </button>
+
+                        {{ form_row(imageForm.image, {label: false}) }}
+                        {{ form_widget(imageForm.delete, {attr: {class: 'd-none'}}) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="js-add-image">
+            <i class="bi bi-plus-lg" aria-hidden="true"></i> Добавить картинку
+        </button>
+        <div class="form-text">Картинки сохраняются только после отправки формы</div>
+    </div>
+
+    <template id="image-prototype-template">
+        {{ form_widget(form.images.vars.prototype) }}
+    </template>
+
+    {{ form_widget(form.csrf_token) }}
+    <button class="btn btn-success mb-2">{{ button_label|default('Сохранить') }}</button>
+{{ form_end(form) }}
+
+{% block javascript %}
+<script type="module">
+    import 'form-product-select2';
+    import 'form-product-images';
+</script>
+{% endblock %}

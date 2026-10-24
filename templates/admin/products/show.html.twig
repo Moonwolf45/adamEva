@@ -1,0 +1,113 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block page_name %}
+    Товар {{ product.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <a class="btn btn-primary" href="{{ path('admin_products_edit', {'id': product.id}) }}">
+                Редактировать
+            </a>
+
+            <a class="btn btn-secondary" href="{{ path('admin_products_index') }}">
+                Назад
+            </a>
+        </div>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-striped align-middle">
+                <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ product.id }}</td>
+                </tr>
+                <tr>
+                    <th>Название</th>
+                    <td>{{ product.title }}</td>
+                </tr>
+                <tr>
+                    <th>Транслитерированное название</th>
+                    <td>{{ product.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Meta-ключевые слова</th>
+                    <td>{{ product.metaKeywords }}</td>
+                </tr>
+                <tr>
+                    <th>Meta-описание</th>
+                    <td>{{ product.metaDescription }}</td>
+                </tr>
+                <tr>
+                    <th>Главная категория</th>
+                    <td>{{ product.mainCategory.title }}</td>
+                </tr>
+                <tr>
+                    <th>Артикул</th>
+                    <td>{{ product.article }}</td>
+                </tr>
+                <tr>
+                    <th>Модель</th>
+                    <td>{{ product.model }}</td>
+                </tr>
+                <tr>
+                    <th>Главная картинка</th>
+                    <td>
+                        {% if product.image %}
+                            <img src="{{ asset(product.image) }}"
+                                 alt="{{ product.title }}"
+                                 class="img-fluid rounded"
+                                 style="max-height: 120px">
+                        {% else %}
+                            <span class="text-secondary">— Нет —</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Дополнительные картинки</th>
+                    <td>
+                        {% if product.images|length > 0 %}
+                            {% for image in product.images %}
+                                <img src="{{ asset(image.image) }}"
+                                     alt="{{ product.title }}"
+                                     class="img-fluid rounded me-2 mb-2"
+                                     style="max-width:300px;max-height:100px;">
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-secondary">— Нет —</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Описание</th>
+                    <td>{{ product.description }}</td>
+                </tr>
+                <tr>
+                    <th>Цена</th>
+                    <td>{{ product.price }}</td>
+                </tr>
+                <tr>
+                    <th>Дата создания</th>
+                    <td>{{ product.createdAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Дата обновления</th>
+                    <td>{{ product.updatedAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Статус</th>
+                    <td>{% if product.status %}
+                            <span class="badge text-bg-success">Активен</span>
+                        {% else %}
+                            <span class="badge text-bg-secondary">Отключен</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            {{ include('admin/products/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

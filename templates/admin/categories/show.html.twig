@@ -1,0 +1,75 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block page_name %}
+    Категория {{ category.title }}
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <a class="btn btn-primary" href="{{ path('admin_categories_edit', {'id': category.id}) }}">
+            Редактировать
+        </a>
+
+        <a class="btn btn-secondary" href="{{ path('admin_categories_index') }}">
+            Назад
+        </a>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-striped align-middle">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ category.id }}</td>
+                </tr>
+                <tr>
+                    <th>Название</th>
+                    <td>{{ category.title }}</td>
+                </tr>
+                <tr>
+                    <th>Транслитерированное название</th>
+                    <td>{{ category.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Meta-ключевые слова</th>
+                    <td>{{ category.metaKeywords }}</td>
+                </tr>
+                <tr>
+                    <th>Meta-описание</th>
+                    <td>{{ category.metaDescription }}</td>
+                </tr>
+                <tr>
+                    <th>Родительская категория</th>
+                    <td>
+                        {% if category.parent %}
+                            {{ category.parent.title }}
+                        {% else %}
+                            <span class="text-secondary">— Главная —</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Дата создания</th>
+                    <td>{{ category.createdAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Дата обновления</th>
+                    <td>{{ category.updatedAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Статус</th>
+                    <td>{% if category.status %}
+                            <span class="badge text-bg-success">Активна</span>
+                        {% else %}
+                            <span class="badge text-bg-secondary">Отключена</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        {{ include('admin/categories/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

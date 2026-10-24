@@ -1,0 +1,12 @@
+<a class="btn btn-info mb2" href="{{ path('admin_categories_show', {'id': row.id}) }}">
+    Посмотреть
+</a>
+<a class="btn btn-primary mb2" href="{{ path('admin_categories_edit', {'id': row.id}) }}">
+    Редактировать
+</a>
+
+<form method="post" action="{{ path('admin_categories_delete', {'id': row.id}) }}" onsubmit="return confirm('Вы уверены, что хотите удалить данную категорию?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ row.id) }}">
+    <button class="btn btn-danger">Удалить</button>
+</form>
+

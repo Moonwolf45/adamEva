@@ -1,0 +1,11 @@
+{% macro menu_item(route, icon, label) %}
+    {% set current_route = app.request.attributes.get('_route') %}
+    {% set is_active = (current_route == route or current_route starts with route ~ '_') %}
+
+    <li class="nav-item">
+        <a href="{{ path(route) }}" class="nav-link {{ is_active ? 'active' : '' }}">
+            <i class="nav-icon {{ icon }}"></i>
+            <p>{{ label }}</p>
+        </a>
+    </li>
+{% endmacro %}

@@ -1,0 +1,66 @@
+deptrac:
+    paths:
+        - ./src
+    exclude_files:
+        - '#.*test.*#'
+    layers:
+        -   name: Controller
+            collectors:
+                -   type: directory
+                    value: src/Controller/.*
+        -   name: Service
+            collectors:
+                -   type: directory
+                    value: src/Service/.*
+        -   name: Repository
+            collectors:
+                -   type: directory
+                    value: src/Repository/.*
+        -   name: Entity
+            collectors:
+                -   type: directory
+                    value: src/Entity/.*
+        -   name: Form
+            collectors:
+                -   type: directory
+                    value: src/Form/.*
+        -   name: Dto
+            collectors:
+                -   type: directory
+                    value: src/Dto/.*
+        -   name: Model
+            collectors:
+                -   type: directory
+                    value: src/Model/.*
+        -   name: TwigExtension
+            collectors:
+                -   type: directory
+                    value: src/Extension/.*
+        -   name: Fixtures
+            collectors:
+                -   type: directory
+                    value: src/DataFixtures/.*
+    ruleset:
+        Controller:
+            - Service
+            - Entity
+            - Dto
+        Service:
+            - Repository
+            - Entity
+            - Form
+            - Dto
+            - Model
+        Repository:
+            - Entity
+        Entity:
+            - Repository
+        Form:
+            - Entity
+        Dto:
+            - Model
+        TwigExtension:
+            - Service
+            - Model
+        Fixtures:
+            - Entity
